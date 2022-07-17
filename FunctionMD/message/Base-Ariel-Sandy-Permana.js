@@ -1803,7 +1803,7 @@ break
 case 'setdesc': case 'setdescription':
 if (q.includes('--help')) return reply(examquery) 
 if (!isGroup) return reply('Khusus Grup')
-if (!isGroupAdmins) return reply('Khusus Admin')
+if (!isGroupAdmins && !isOwner) return reply('Khusus Admin')
 if (!isBotGroupAdmins) return reply('Bot Bukan Admins')
 if (!q) return reply(`Kirim perintah ${prefix + order} teks`)
 await sock.groupUpdateDescription(from, q)
@@ -1811,7 +1811,7 @@ break
 case 'welcome': case 'group':
 if (q.includes('--help')) return reply(`Example : ${prefix + order} on/off`) 
 if (!isGroup) return reply('Khusus Grup')
-if (!isGroupAdmins) return reply('Khusus Admin')
+if (!isGroupAdmins && !isOwner) return reply('Khusus Admin')
 if (!isBotGroupAdmins) return reply('Bot Bukan Admins')
 if (!q) return reply(`Kirim perintah ${prefix + order} _options_\nOptions : tutup & buka\nContoh : ${prefix + order} tutup`)
 if (q == "tutup") {
@@ -1827,21 +1827,21 @@ break
 case 'revoke':
 if (q.includes('--help')) return reply(examkosong) 
 if (!isGroup) return reply('Khusus Grup')
-if (!isGroupAdmins) return reply('Khusus Admin')
+if (!isGroupAdmins && !isOwner) return reply('Khusus Admin')
 if (!isBotGroupAdmins) return reply('Bot Bukan Admins')
 await sock.groupRevokeInvite(from)
 break
 case 'setnamegroup':
 if (q.includes('--help')) return reply(examkosong) 
 if (!isGroup) return reply('Khusus Grup')
-if (!isGroupAdmins) return reply('Khusus Admin')
+if (!isGroupAdmins && !isOwner) return reply('Khusus Admin')
 if (!isBotGroupAdmins) return reply('Bot Bukan Admins')
 if (!q) reply('Diganti jadi apa') 
 await sock.groupUpdateSubject(from, q)
 break
 case 'tagall':
 if (!isGroup) return reply('*Perintah ini khusus Grup*')
-if (!isGroupAdmins) return reply('*Khusus Admin*!')
+if (!isGroupAdmins && !isOwner) return reply('*Khusus Admin*!')
 var mems = []
 var teks = `「 Tag All 」\n\n➲ Pesan : ${q}\n\n`
 for (let i of groupMembers) {
@@ -1852,7 +1852,7 @@ sock.sendMessage(from, { text: teks, mentions: mems}, { quoted: m })
 break
 case 'hidetag':
 if (!isGroup) return reply('*Perintah ini khusus Grup*!')
-if (!isGroupAdmins) return reply('*Khusus Admin*!')
+if (!isGroupAdmins && !isOwner) return reply('*Khusus Admin*!')
 let mem = [];
 groupMembers.map( i => mem.push(i.id) )
 sock.sendMessage(from, { text: q ? q : '', mentions: mem }, {quoted: m})
@@ -2793,7 +2793,7 @@ sock.sendMessage(from, { image: { url: result }, caption: '▹ Media Url : '+res
   case 'antilink':
 if (q.includes('--help')) return reply(`*Example* : ${prefix+order}off/on`) 
 if (!isGroup) return reply('Khusus Grup')
-if (!isGroupAdmins) return reply('Khusus Admin') 
+if (!isGroupAdmins && !isOwner) return reply('Khusus Admin') 
 if (!isBotGroupAdmins) return reply('Bot bukan admin') 
 if (q === 'on') {
 if (isAntiLink) return reply('Sudah Aktif Kak')
@@ -2814,7 +2814,7 @@ break
   case 'promote':{
 if (q.includes('--help')) return reply(examtag) 
    if (!isGroup) return reply('Khusus Grup')
-   if (!isGroupAdmins) return reply('Khusus Admin')
+   if (!isGroupAdmins && !isOwner) return reply('Khusus Admin')
    if (!isBotGroupAdmins) return reply('Bot Bukan Admin')
    if (args.length < 1) return reply('Contoh : #promote @6282118022072 Untuk Menjadikan Nomor Tersebut Admin Di Group Ini')
    reply('Berhasil!! Dan Sekarang Dia Sudah Menjadi Admin Di Group Ini')
@@ -2825,7 +2825,7 @@ if (q.includes('--help')) return reply(examtag)
   case 'demote':{
 if (q.includes('--help')) return reply(examtag) 
    if (!isGroup) return reply('Khusus Grup')
-   if (!isGroupAdmins) return reply('Khusus Admin')
+   if (!isGroupAdmins && !isOwner) return reply('Khusus Admin')
    if (!isBotGroupAdmins) return reply('Bot Bukan Admin')
    if (args.length < 1) return reply('Contoh : #promote @6282118022072 Untuk Menjadikan Nomor Tersebut Sebagai Member Di Group Ini')
    reply('Berhasil!! Dia Sekarang Bukan Admin Di Group Ini')
@@ -2836,7 +2836,7 @@ if (q.includes('--help')) return reply(examtag)
   case 'add':{
    if (q.includes('--help')) return reply(examlink) 
    if (!isGroup) return reply('Khusus Grup')
-   if (!isGroupAdmins) return reply('Khusus Admin')
+   if (!isGroupAdmins && !isOwner) return reply('Khusus Admin')
    if (!isBotGroupAdmins) return reply('Bot Bukan Admin')
    if (args.length < 1) return reply('Contoh : #add +62 821-1802-2072')
    if (args[1]){
@@ -2852,7 +2852,7 @@ if (q.includes('--help')) return reply(examtag)
   case 'kick':{
    if (q.includes('--help')) return reply(examlink)
    if (!isGroup) return reply('Khusus Grup')
-   if (!isGroupAdmins) return reply('Khusus Admin')
+   if (!isGroupAdmins && !isOwner) return reply('Khusus Admin')
    if (!isBotGroupAdmins) return reply('Bot Bukan Admin')
    if (args.length < 1) return reply('Contoh : #kick @6282118022072')
    console.log(mentionUser)
